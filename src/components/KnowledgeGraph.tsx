@@ -1,115 +1,263 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import ChatBot from './ChatBot';
+import knowledgeGraphData from './data.json';
 
 interface Node {
   id: string;
+  type: string;
   name: string;
-  group: number;
-  val?: number;
+  aliases: string[];
+  description?: string;
+  provenance: {
+    row_ids: number[];
+    first_seen: string;
+  };
   x?: number;
   y?: number;
-}
-
-interface Link {
-  source: string;
-  target: string;
-  value?: number;
+  expanded?: boolean;
+  fx?: number; // Fixed x position
+  fy?: number; // Fixed y position
 }
 
 interface GraphData {
   nodes: Node[];
-  links: Link[];
+  links: Array<{
+    source: string;
+    target: string;
+    value?: number;
+    confidence?: number;
+    type?: string;
+  }>;
 }
 
 const KnowledgeGraph: React.FC = () => {
   const fgRef = useRef<any>(null);
+  const [graphData, setGraphData] = useState<GraphData>({ nodes: [], links: [] });
+  const [hasExpandedNode, setHasExpandedNode] = useState(false);
 
   // Helper function to generate initial positions in a circle
   const generateInitialPositions = (nodes: Node[]) => {
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-    const radius = Math.min(window.innerWidth, window.innerHeight) * 0.2; // Reduced radius for tighter initial layout
+    const radius = Math.min(window.innerWidth, window.innerHeight) * 0.2;
     
     return nodes.map((node, index) => {
       const angle = (2 * Math.PI * index) / nodes.length;
       return {
         ...node,
         x: centerX + radius * Math.cos(angle),
-        y: centerY + radius * Math.sin(angle)
+        y: centerY + radius * Math.sin(angle),
+        expanded: false,
+        fx: undefined,
+        fy: undefined
       };
     });
   };
 
-  // Sample knowledge graph data with initial positions
-  const graphData: GraphData = {
-    nodes: generateInitialPositions([
-      { id: 'React', name: 'React', group: 1, val: 30 },
-      { id: 'JavaScript', name: 'JavaScript', group: 1, val: 25 },
-      { id: 'TypeScript', name: 'TypeScript', group: 1, val: 20 },
-      { id: 'Node.js', name: 'Node.js', group: 2, val: 22 },
-      { id: 'Express', name: 'Express', group: 2, val: 18 },
-      { id: 'MongoDB', name: 'MongoDB', group: 3, val: 15 },
-      { id: 'PostgreSQL', name: 'PostgreSQL', group: 3, val: 17 },
-      { id: 'GraphQL', name: 'GraphQL', group: 4, val: 16 },
-      { id: 'REST API', name: 'REST API', group: 4, val: 14 },
-      { id: 'Docker', name: 'Docker', group: 5, val: 12 },
-      { id: 'AWS', name: 'AWS', group: 5, val: 20 },
-      { id: 'Git', name: 'Git', group: 6, val: 10 },
-      { id: 'Machine Learning', name: 'Machine Learning', group: 7, val: 25 },
-      { id: 'Python', name: 'Python', group: 7, val: 28 },
-      { id: 'Data Science', name: 'Data Science', group: 7, val: 22 }
-    ]),
-    links: [
-      { source: 'React', target: 'JavaScript', value: 5 },
-      { source: 'React', target: 'TypeScript', value: 4 },
-      { source: 'JavaScript', target: 'Node.js', value: 6 },
-      { source: 'Node.js', target: 'Express', value: 8 },
-      { source: 'Express', target: 'MongoDB', value: 3 },
-      { source: 'Express', target: 'PostgreSQL', value: 4 },
-      { source: 'Node.js', target: 'GraphQL', value: 3 },
-      { source: 'Node.js', target: 'REST API', value: 5 },
-      { source: 'Node.js', target: 'Docker', value: 2 },
-      { source: 'Docker', target: 'AWS', value: 4 },
-      { source: 'JavaScript', target: 'Git', value: 2 },
-      { source: 'Python', target: 'Machine Learning', value: 7 },
-      { source: 'Python', target: 'Data Science', value: 6 },
-      { source: 'Machine Learning', target: 'Data Science', value: 8 },
-      { source: 'JavaScript', target: 'Python', value: 2 },
-      { source: 'TypeScript', target: 'Node.js', value: 3 }
-    ]
-  };
-
+  // Transform the knowledge graph data
   useEffect(() => {
-    if (fgRef.current) {
-      // Set initial zoom to be more zoomed in
-      setTimeout(() => {
-        fgRef.current.zoomToFit(100); // Reduced from 400 to 100 for more zoom
-      }, 100);
-    }
+    const transformedData: GraphData = {
+      nodes: generateInitialPositions(knowledgeGraphData.nodes),
+      links: knowledgeGraphData.edges.map(edge => ({
+        source: edge.source,
+        target: edge.target,
+        value: edge.signals.similarity * 10,
+        confidence: edge.confidence,
+        type: edge.type
+      }))
+    };
+    setGraphData(transformedData);
   }, []);
 
+  useEffect(() => {
+    if (fgRef.current && graphData.nodes.length > 0) {
+      setTimeout(() => {
+        fgRef.current.zoomToFit(100);
+      }, 100);
+    }
+  }, [graphData]);
+
   const getNodeColor = (node: Node) => {
-    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff'];
-    return colors[node.group % colors.length];
+    // Even lighter blue color scheme
+    const typeColors: { [key: string]: string } = {
+      'Concept': '#F0F8FF',      // Alice blue - very light
+      'Entity': '#F5F9FF',       // Even lighter blue
+      'Process': '#FAFCFF',      // Almost white with blue tint
+      'Technology': '#F2F7FF',   // Very light blue
+      'Method': '#F7FBFF',       // Very light blue
+      'Framework': '#F4F8FF',    // Very light blue
+      'Protocol': '#EFF4FF'      // Very light blue
+    };
+    return typeColors[node.type] || '#FAFCFF'; // Default to almost white
+  };
+
+  const getNodeSize = (node: Node) => {
+    const aliasCount = node.aliases.length;
+    const connectionCount = graphData.links.filter(
+      link => link.source === node.id || link.target === node.id
+    ).length;
+    return Math.sqrt(aliasCount + connectionCount + 1) * 3;
+  };
+
+  const getLinkColor = (link: any) => {
+    const confidence = link.confidence || 0;
+    if (confidence > 0.8) return 'rgba(100, 149, 237, 0.8)'; // Cornflower blue for high confidence
+    if (confidence > 0.6) return 'rgba(135, 206, 250, 0.8)'; // Light sky blue for medium confidence
+    return 'rgba(173, 216, 230, 0.8)'; // Light blue for low confidence
+  };
+
+  const getLinkWidth = (link: any) => {
+    const confidence = link.confidence || 0;
+    return Math.max(1, confidence * 3);
   };
 
   const handleNodeClick = (nodeId: string) => {
     if (fgRef.current) {
-      // Get the current graph data with positions
-      const currentGraphData = fgRef.current.graphData();
-      const node = currentGraphData.nodes.find((n: any) => n.id === nodeId);
+      // Find the node in our current graph data
+      const node = graphData.nodes.find((n: any) => n.id === nodeId);
       
       if (node && node.x !== undefined && node.y !== undefined) {
-        // Center the view on the node
         fgRef.current.centerAt(node.x, node.y, 1000);
         fgRef.current.zoom(2, 1000);
       } else {
-        // Fallback: just zoom to fit if node position not available
         fgRef.current.zoomToFit(100);
       }
     }
   };
+
+  const handleNodeClickInternal = (node: any) => {
+    setGraphData(prevData => {
+      const newNodes = prevData.nodes.map(n => {
+        if (n.id === node.id) {
+          // Toggle expansion for clicked node
+          const newExpanded = !n.expanded;
+          return {
+            ...n,
+            expanded: newExpanded,
+            // Fix position when expanding to prevent movement
+            fx: newExpanded ? n.x : undefined,
+            fy: newExpanded ? n.y : undefined
+          };
+        } else {
+          // Close other expanded nodes and unfix their positions
+          return {
+            ...n,
+            expanded: false,
+            fx: undefined,
+            fy: undefined
+          };
+        }
+      });
+      
+      return {
+        ...prevData,
+        nodes: newNodes
+      };
+    });
+    
+    // Update expanded state
+    const newExpanded = !node.expanded;
+    setHasExpandedNode(newExpanded);
+    
+    console.log('Node clicked:', node);
+  };
+
+  // Custom node renderer to create expandable boxes
+  const customNodeCanvasObject = (node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
+    const label = node.name;
+    const fontSize = 12 / globalScale;
+    const expandedFontSize = 10 / globalScale;
+    ctx.font = `${fontSize}px Sans-Serif`;
+    
+    // Calculate dimensions
+    const textWidth = ctx.measureText(label).width;
+    const baseBoxWidth = textWidth + 20;
+    const baseBoxHeight = 28;
+    const borderRadius = 4;
+    
+    let boxWidth = baseBoxWidth;
+    let boxHeight = baseBoxHeight;
+    let content = [label];
+    
+    // If expanded, show more content
+    if (node.expanded) {
+      const description = node.description || 'No description available yet.';
+      const typeText = `Type: ${node.type}`;
+      const aliasesText = node.aliases.length > 0 ? `Aliases: ${node.aliases.join(', ')}` : '';
+      
+      content = [label, typeText, aliasesText, description];
+      
+      // Calculate expanded dimensions
+      ctx.font = `${expandedFontSize}px Sans-Serif`;
+      const maxTextWidth = Math.max(
+        ...content.map(text => ctx.measureText(text).width)
+      );
+      
+      boxWidth = Math.max(maxTextWidth + 20, 200); // Minimum width for expanded
+      boxHeight = content.length * (expandedFontSize + 4) + 16; // Height based on content
+    }
+    
+    // Set node size for collision detection (but don't let it affect positioning)
+    node.__size = Math.max(boxWidth, boxHeight) / 2;
+    
+    // Draw rounded rectangle background
+    ctx.fillStyle = getNodeColor(node);
+    ctx.beginPath();
+    ctx.roundRect(node.x - boxWidth/2, node.y - boxHeight/2, boxWidth, boxHeight, borderRadius);
+    ctx.fill();
+    
+    // Draw rounded rectangle border
+    ctx.strokeStyle = node.expanded ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.2)';
+    ctx.lineWidth = (node.expanded ? 2 : 1) / globalScale;
+    ctx.beginPath();
+    ctx.roundRect(node.x - boxWidth/2, node.y - boxHeight/2, boxWidth, boxHeight, borderRadius);
+    ctx.stroke();
+    
+    // Draw content
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#000000';
+    
+    if (node.expanded) {
+      // Draw expanded content
+      ctx.font = `${expandedFontSize}px Sans-Serif`;
+      const lineHeight = expandedFontSize + 4;
+      const startY = node.y - (content.length - 1) * lineHeight / 2;
+      
+      content.forEach((text, index) => {
+        const y = startY + index * lineHeight;
+        if (index === 0) {
+          // Title in bold
+          ctx.font = `bold ${fontSize}px Sans-Serif`;
+          ctx.fillText(text, node.x, y);
+          ctx.font = `${expandedFontSize}px Sans-Serif`;
+        } else {
+          ctx.fillText(text, node.x, y);
+        }
+      });
+    } else {
+      // Draw normal content
+      ctx.font = `${fontSize}px Sans-Serif`;
+      ctx.fillText(label, node.x, node.y);
+    }
+  };
+
+  if (graphData.nodes.length === 0) {
+    return (
+      <div style={{ 
+        width: '100%', 
+        height: '100vh', 
+        background: '#1a1a2e', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        color: 'white'
+      }}>
+        Loading knowledge graph...
+      </div>
+    );
+  }
 
   return (
     <div style={{ width: '100%', height: '100vh', background: '#1a1a2e', position: 'relative' }}>
@@ -120,26 +268,21 @@ const KnowledgeGraph: React.FC = () => {
       <ForceGraph2D
         ref={fgRef}
         graphData={graphData}
-        nodeLabel="name"
-        nodeColor={getNodeColor}
-        nodeRelSize={3}
-        nodeVal={(node: any) => Math.sqrt(node.val || 1) * 2}
-        linkColor={() => 'rgba(255,255,255,0.4)'}
-        linkWidth={1.5}
-        linkDirectionalParticles={1}
-        linkDirectionalParticleWidth={1}
+        nodeCanvasObject={customNodeCanvasObject}
+        nodeVal={(node: any) => getNodeSize(node)}
+        linkColor={getLinkColor}
+        linkWidth={getLinkWidth}
+        linkDirectionalParticles={2}
+        linkDirectionalParticleWidth={2}
         backgroundColor="#1a1a2e"
         width={window.innerWidth}
         height={window.innerHeight}
-        onNodeClick={(node: any) => {
-          console.log('Node clicked:', node);
-        }}
+        onNodeClick={handleNodeClickInternal}
         onNodeHover={(node: any) => {
           document.body.style.cursor = node ? 'pointer' : 'default';
         }}
-        cooldownTicks={100}
-        // Force simulation parameters for better spacing
-        d3AlphaDecay={0.02}
+        cooldownTicks={hasExpandedNode ? 0 : 100} // Disable simulation when expanded
+        d3AlphaDecay={hasExpandedNode ? 1 : 0.02} // Stop simulation immediately when expanded
         d3VelocityDecay={0.4}
       />
     </div>

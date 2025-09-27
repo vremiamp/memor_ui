@@ -1,0 +1,426 @@
+{
+    "nodes": [
+      {
+        "id": "kg:Concept/query-transformations",
+        "type": "Concept",
+        "name": "Query Transformations",
+        "aliases": [
+          "Query rewriting"
+        ],
+        "provenance": {
+          "row_ids": [
+            26
+          ],
+          "first_seen": "2025-09-27T13:28:31.305227+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/intelligent-routing",
+        "type": "Concept",
+        "name": "Intelligent Routing",
+        "aliases": [],
+        "provenance": {
+          "row_ids": [
+            26
+          ],
+          "first_seen": "2025-09-27T13:28:31.305227+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/indexing",
+        "type": "Concept",
+        "name": "Indexing",
+        "aliases": [
+          "Multi-layered knowledge base"
+        ],
+        "provenance": {
+          "row_ids": [
+            26
+          ],
+          "first_seen": "2025-09-27T13:28:31.305227+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/retrieval-and-re-ranking",
+        "type": "Concept",
+        "name": "Retrieval and Re-ranking",
+        "aliases": [
+          "Re-ranking"
+        ],
+        "provenance": {
+          "row_ids": [
+            26
+          ],
+          "first_seen": "2025-09-27T13:28:31.305227+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/self-correcting-agentic-flows",
+        "type": "Concept",
+        "name": "Self-Correcting Agentic Flows",
+        "aliases": [],
+        "provenance": {
+          "row_ids": [
+            26
+          ],
+          "first_seen": "2025-09-27T13:28:31.305227+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/end-to-end-evaluation",
+        "type": "Concept",
+        "name": "End-to-End Evaluation",
+        "aliases": [],
+        "provenance": {
+          "row_ids": [
+            26
+          ],
+          "first_seen": "2025-09-27T13:28:31.305227+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/knowledge-graph",
+        "type": "Concept",
+        "name": "Knowledge graph",
+        "aliases": [
+          "Semantic network"
+        ],
+        "provenance": {
+          "row_ids": [
+            27
+          ],
+          "first_seen": "2025-09-27T13:28:53.91729+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/adaptive-rag",
+        "type": "Concept",
+        "name": "Adaptive RAG",
+        "aliases": [
+          "Adaptive Retrieval-Augmented Generation"
+        ],
+        "provenance": {
+          "row_ids": [
+            28,
+            29
+          ],
+          "first_seen": "2025-09-27T13:28:59.897911+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/dynamic-query-analysis",
+        "type": "Concept",
+        "name": "Dynamic query analysis",
+        "aliases": [],
+        "provenance": {
+          "row_ids": [
+            28,
+            29
+          ],
+          "first_seen": "2025-09-27T13:28:59.897911+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/self-correcting-mechanisms",
+        "type": "Concept",
+        "name": "Self-correcting mechanisms",
+        "aliases": [],
+        "provenance": {
+          "row_ids": [
+            28,
+            29
+          ],
+          "first_seen": "2025-09-27T13:28:59.897911+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/response-accuracy-optimization",
+        "type": "Concept",
+        "name": "Response accuracy optimization",
+        "aliases": [
+          "Optimize response accuracy"
+        ],
+        "provenance": {
+          "row_ids": [
+            28,
+            29
+          ],
+          "first_seen": "2025-09-27T13:28:59.897911+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/model-context-protocol-mcp",
+        "type": "Concept",
+        "name": "Model Context Protocol (MCP)",
+        "aliases": [
+          "MCP",
+          "Model Context Protocol"
+        ],
+        "provenance": {
+          "row_ids": [
+            30,
+            31
+          ],
+          "first_seen": "2025-09-27T13:29:10.738353+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/standardized-agent-messaging",
+        "type": "Concept",
+        "name": "Standardized agent messaging",
+        "aliases": [
+          "Agent-to-agent message standardization"
+        ],
+        "provenance": {
+          "row_ids": [
+            30,
+            31
+          ],
+          "first_seen": "2025-09-27T13:29:10.738353+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/modular-tool-interfaces",
+        "type": "Concept",
+        "name": "Modular tool interfaces",
+        "aliases": [],
+        "provenance": {
+          "row_ids": [
+            30,
+            31
+          ],
+          "first_seen": "2025-09-27T13:29:10.738353+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/coordination-layer",
+        "type": "Concept",
+        "name": "Coordination layer",
+        "aliases": [
+          "Coordinator module"
+        ],
+        "provenance": {
+          "row_ids": [
+            30,
+            31
+          ],
+          "first_seen": "2025-09-27T13:29:10.738353+00:00"
+        }
+      },
+      {
+        "id": "kg:Concept/message-bus",
+        "type": "Concept",
+        "name": "Message bus",
+        "aliases": [
+          "Communication bus"
+        ],
+        "provenance": {
+          "row_ids": [
+            30,
+            31
+          ],
+          "first_seen": "2025-09-27T13:29:10.738353+00:00"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "kg:e/adaptive-rag--dynamic-query-analysis",
+        "type": "is_related_to",
+        "source": "kg:Concept/adaptive-rag",
+        "target": "kg:Concept/dynamic-query-analysis",
+        "signals": {
+          "similarity": 0.7,
+          "cooccurrence": 2
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 28,
+            "snippet": "Adaptive RAG ... integrates dynamic query analysis with self-correcting mechanisms to optimize response accuracy.",
+            "score": 0.9
+          }
+        ],
+        "confidence": 0.85,
+        "notes": "Adaptive RAG explicitly integrates dynamic query analysis."
+      },
+      {
+        "id": "kg:e/adaptive-rag--self-correcting-mechanisms",
+        "type": "is_related_to",
+        "source": "kg:Concept/adaptive-rag",
+        "target": "kg:Concept/self-correcting-mechanisms",
+        "signals": {
+          "similarity": 0.69,
+          "cooccurrence": 2
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 29,
+            "snippet": "Adaptive RAG ... integrates dynamic query analysis with self-correcting mechanisms to optimize response accuracy.",
+            "score": 0.9
+          }
+        ],
+        "confidence": 0.85,
+        "notes": "Self-correcting mechanisms are a core part of Adaptive RAG."
+      },
+      {
+        "id": "kg:e/adaptive-rag--response-accuracy-optimization",
+        "type": "is_related_to",
+        "source": "kg:Concept/adaptive-rag",
+        "target": "kg:Concept/response-accuracy-optimization",
+        "signals": {
+          "similarity": 0.68,
+          "cooccurrence": 2
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 28,
+            "snippet": "Adaptive RAG ... integrates dynamic query analysis with self-correcting mechanisms to optimize response accuracy.",
+            "score": 0.9
+          }
+        ],
+        "confidence": 0.84,
+        "notes": "Adaptive RAG aims to optimize response accuracy."
+      },
+      {
+        "id": "kg:e/self-correcting-agentic-flows--self-correcting-mechanisms",
+        "type": "is_related_to",
+        "source": "kg:Concept/self-correcting-agentic-flows",
+        "target": "kg:Concept/self-correcting-mechanisms",
+        "signals": {
+          "similarity": 0.86,
+          "cooccurrence": 0
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 26,
+            "snippet": "Self-Correcting Agentic Flows: Building systems that can grade and improve their own work.",
+            "score": 0.9
+          },
+          {
+            "row_id": 28,
+            "snippet": "Adaptive RAG ... integrates ... self-correcting mechanisms ...",
+            "score": 0.88
+          }
+        ],
+        "confidence": 0.83,
+        "notes": "Both refer to mechanisms for systems to evaluate and improve their outputs."
+      },
+      {
+        "id": "kg:e/query-transformations--dynamic-query-analysis",
+        "type": "is_related_to",
+        "source": "kg:Concept/query-transformations",
+        "target": "kg:Concept/dynamic-query-analysis",
+        "signals": {
+          "similarity": 0.8,
+          "cooccurrence": 0
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 26,
+            "snippet": "Query Transformations: Rewriting user questions to be more effective for retrieval.",
+            "score": 0.88
+          },
+          {
+            "row_id": 28,
+            "snippet": "Adaptive RAG ... integrates dynamic query analysis ...",
+            "score": 0.86
+          }
+        ],
+        "confidence": 0.8,
+        "notes": "Both target improving queries for better retrieval effectiveness."
+      },
+      {
+        "id": "kg:e/model-context-protocol-mcp--standardized-agent-messaging",
+        "type": "is_related_to",
+        "source": "kg:Concept/model-context-protocol-mcp",
+        "target": "kg:Concept/standardized-agent-messaging",
+        "signals": {
+          "similarity": 0.74,
+          "cooccurrence": 2
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 30,
+            "snippet": "When agent-to-agent messages aren\u2019t standardized, everything breaks. Successful teams use MCP (Model Context Protocol)...",
+            "score": 0.91
+          }
+        ],
+        "confidence": 0.87,
+        "notes": "MCP is cited as the solution for standardized agent messaging."
+      },
+      {
+        "id": "kg:e/modular-tool-interfaces--coordination-layer",
+        "type": "is_related_to",
+        "source": "kg:Concept/modular-tool-interfaces",
+        "target": "kg:Concept/coordination-layer",
+        "signals": {
+          "similarity": 0.7,
+          "cooccurrence": 2
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 31,
+            "snippet": "Hard-coding tools ... but modular tool interfaces are critical ... Multiple agents with no shared planner? ... A well-defined coordinator module is essential.",
+            "score": 0.9
+          }
+        ],
+        "confidence": 0.82,
+        "notes": "Both are listed as essential components of robust agentic AI architecture."
+      },
+      {
+        "id": "kg:e/coordination-layer--message-bus",
+        "type": "is_related_to",
+        "source": "kg:Concept/coordination-layer",
+        "target": "kg:Concept/message-bus",
+        "signals": {
+          "similarity": 0.72,
+          "cooccurrence": 2
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 30,
+            "snippet": "Missing Coordination Layer ... A well-defined coordinator module is essential. No Communication Bus ... Agent communication without a message bus quickly turns into spaghetti code.",
+            "score": 0.9
+          }
+        ],
+        "confidence": 0.84,
+        "notes": "Coordinator and message bus are paired as necessary coordination/communication layers."
+      },
+      {
+        "id": "kg:e/indexing--retrieval-and-re-ranking",
+        "type": "is_related_to",
+        "source": "kg:Concept/indexing",
+        "target": "kg:Concept/retrieval-and-re-ranking",
+        "signals": {
+          "similarity": 0.8,
+          "cooccurrence": 1
+        },
+        "direction": "bidirectional",
+        "evidence": [
+          {
+            "row_id": 26,
+            "snippet": "Indexing: Creating a multi-layered knowledge base.",
+            "score": 0.86
+          },
+          {
+            "row_id": 26,
+            "snippet": "Retrieval and Re-ranking: Filtering noise and prioritizing the most relevant context.",
+            "score": 0.86
+          }
+        ],
+        "confidence": 0.79,
+        "notes": "Indexing precedes retrieval and re-ranking in the same RAG pipeline."
+      }
+    ],
+    "meta": {
+      "generated_at": "2025-09-27T13:29:30Z"
+    }
+  }
